@@ -33,7 +33,20 @@ const routes = [
         //{name?} merupakan optional parameter karna menggunakan '?'
         handler: (request, h) => {
             const { name = "stranger" } = request.params;
+            const {lang} = request.query;
+
+            if(lang === 'id') {
+                return `Hai, ${name}!`;
+            }
             return `Hello, ${name}!`;
+        }
+    },
+    {
+        method: 'POST',
+        path: '/login',
+        handler: (request, h) => {
+            const { username, password } = request.payload;
+            return `Welcome ${username}!`;
         }
     },
     {
