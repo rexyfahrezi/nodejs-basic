@@ -1,0 +1,17 @@
+{
+  "name": "3.NPM",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "SET NODE_ENV=dev && node app.js",
+    "start": "SET NODE_ENV=prod && node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
