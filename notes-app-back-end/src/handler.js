@@ -36,4 +36,75 @@ const addNoteHandler = (request, h) => {
   return response;
 };
 
-module.exports = {addNoteHandler};
+const getAllNotesHandler = () => ({
+  status: 'success',
+  data: {
+    notes,
+  },
+});
+
+const getNotesByIdHandler = (request, h) => {
+  const {id} = request.params;
+
+  const note = notes.filter((n) => n.id === id)[0];
+
+  if (note !== undefined) {
+    return {
+      status: 'success',
+      data: {
+        note,
+      },
+    };
+  }
+
+  const response = h.response({
+    status: 'fail',
+    message: 'Catatan tidak ditemukan',
+  });
+
+  response.code(404);
+  return response;
+};
+
+const editNoteByIdHandler = (request, h) => {
+  const {id} = request.params;
+
+  const {title, tags, body} = request.payload;
+  const updatedAt = new Date().toISOString();
+
+  const index = notes.findIndex((n) => n.id === id);
+  // kalau menggunakan findIndex jika hasilnya false maka nilai index = -1
+
+  if (index !== -1) {
+    notes[index] = {
+      ...notes[index],
+      title,
+      tags,
+      body,
+      updatedAt,
+    };
+
+    const response = h.response({
+      status: 'success',
+      message: 'Catatan berhasil diperbaharui',
+    });
+
+    response.code(200);
+    return response;
+  }
+
+  const response = h.response({
+    status: 'fail',
+    message: 'Catatan gagal diperbaharui. Id tidak ditemukan',
+  });
+
+  response.code(404);
+  return response;
+};
+
+module.exports = {
+  addNoteHandler,
+  getAllNotesHandler,
+  getNotesByIdHandler,
+  editNoteByIdHandler,
+};
